@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import ThreeDCube from './3d/ThreeDCube';
+import TechStackShowcase from './3d/TechStackShowcase';
 
 interface AboutSectionProps {
   ref?: (node: HTMLDivElement | null) => void;
@@ -32,7 +32,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-primary/10 z-0"></div>
                 
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <ThreeDCube />
+                  <TechStackShowcase />
                 </div>
               </div>
               
