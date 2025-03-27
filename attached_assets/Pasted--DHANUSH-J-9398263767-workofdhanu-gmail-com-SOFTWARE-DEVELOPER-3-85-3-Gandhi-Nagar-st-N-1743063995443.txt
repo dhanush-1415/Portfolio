@@ -1,0 +1,73 @@
+
+DHANUSH J
+ 9398263767
+ workofdhanu@gmail.com
+ SOFTWARE DEVELOPER
+ 3-85/3 , Gandhi Nagar st , Nagari
+ Andhra pradesh , 517590.
+ SUMMARY
+ Software Developer with a strong proficiency in frontend technologies, including HTML,
+ CSS, JavaScript, ReactJS, Material UI, Bootstrap, and jQuery. Backed by solid skills in
+ backend development with Node.js, Express.js, and a deep understanding of database
+ management using MySQL. Known for creating responsive and visually appealing web
+ applications that enhance user engagement. Adept at collaborating with teams to deliver
+ high-quality projects and passionate about staying current with industry trends and best
+ practices. Ready to contribute my technical expertise to drive the success of your projects
+ PROFESSIONAL EXPERIENCE
+ 7vachan Service Pvt Ltd     |     April/2023 - Currnent
+ Frontend Software Developer
+ Developed and maintained various reusable components to ensure a consistent look and
+ feel across the application.
+ Managed nested routes, route parameters, and query strings for a seamless user
+ experience.
+ Managed form state and validations with React Hook Form for lightweight and
+ performant form handling.
+ Leveraged React Hooks like useEffect and useState to manage component side effects
+ and state in functional components.
+ Frontend Software Developer – Mobile Application Development
+ Developed and maintained a React Native application using Expo for seamless cross
+platform functionality .
+ Implemented efficient navigation using React Navigation, managing stack, tab, and
+ drawer navigators for smooth user experience.
+ Worked with Firebase and third-party SDKs to implement real-time data
+ synchronization, push notifications, and authentication.
+ Isometrica Experiences Pvt ltd     |     Feb/2022 - Mar/2023
+ Full Stack Software Developer  
+Contributed to the development of web application by writing clean and maintainable
+ code using a combination of front-end (HTML, CSS, JavaScript , ReactJs , Bootstrap) and
+ back-end  ( Node.js, Express.js) technologies.
+Designed and implemented new features and functionalities, enhancing the overall user
+ experience and adding value to the application
+ Assisted in database management tasks, including data modeling, querying, and
+ optimizing database performance.
+ EDUCATION
+ S V University , Tirupati
+ SRDC College Affiliated
+ Bachelor's Degree in Computer Science
+ 2018 – 2021
+ XII Pre Degree , Nagari
+ MPC
+ 2018 – 2016
+ SKILLS
+ Programming Languages: JavaScript (ES6+)
+ Front-End: HTML5, CSS3, React.js, 
+React Native, Expo
+ Back-End: Node.js, Express.js,Typescript
+ Databases: MySQL
+ Version Control: Git, GitHub
+ Tools: Visual Studio Code, Postman
+ Other: RESTful APIs, Responsive Design, 
+Material Ui ,Bootstrap,Ajax,Jquery 
+PERSONAL STRENGTH
+ Positive thinking 
+Open to any challenging work
+ Good learner by observation 
+Task completor
+ Time management
+ LANGUAGES
+ English
+ Tamil
+ Telugu
+ I hereby declare that all the details mentioned above are in accordance with the truth and
+ fact as per my knowledge and I hold the responsibility for the correctness of the above
+mentioned particulars
