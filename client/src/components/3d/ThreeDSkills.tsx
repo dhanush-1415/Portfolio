@@ -1,7 +1,37 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+// Create fallback text handler without external dependencies
+const createTextMesh = (text: string, color: number, position: THREE.Vector3, scene: THREE.Scene) => {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  if (!context) return null;
+  
+  canvas.width = 256;
+  canvas.height = 64;
+  
+  context.fillStyle = '#000000';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  
+  context.font = 'Bold 40px Arial';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+  context.fillStyle = '#ffffff';
+  context.fillText(text, canvas.width / 2, canvas.height / 2);
+  
+  const texture = new THREE.CanvasTexture(canvas);
+  const material = new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: true,
+    side: THREE.DoubleSide
+  });
+  
+  const geometry = new THREE.PlaneGeometry(2, 0.5);
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.copy(position);
+  scene.add(mesh);
+  
+  return mesh;
+};
 
 interface ThreeDSkillsProps {
   skills: string[];
@@ -12,7 +42,7 @@ const ThreeDSkills = ({ skills = [] }: ThreeDSkillsProps) => {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const skillsGroupRef = useRef<THREE.Group | null>(null);
+  const skillsGroupRef = useRef<THREE.Group>(new THREE.Group());
   const animationFrameRef = useRef<number | null>(null);
   // Get theme from DOM instead of context to avoid context errors
   const isDarkMode = document.documentElement.classList.contains('dark');
@@ -50,7 +80,7 @@ const ThreeDSkills = ({ skills = [] }: ThreeDSkillsProps) => {
     
     // Create skills visualization
     const createSkillsVisualization = () => {
-      if (!sceneRef.current) return;
+      if (!sceneRef.current) return new THREE.Group();
       
       // Create central sphere to represent skill hub
       const hubGeometry = new THREE.SphereGeometry(3, 32, 32);

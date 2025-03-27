@@ -41,7 +41,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity }}
               >
-                <span className="text-2xl font-bold">2+</span>
+                <span className="text-2xl font-bold">3+</span>
                 <span className="text-xs">Years</span>
               </motion.div>
             </motion.div>
@@ -52,21 +52,21 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-2xl font-serif font-bold mb-6">Software Developer with a passion for creating exceptional user experiences</h3>
+              <h3 className="text-2xl font-serif font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Senior Full Stack Developer with a passion for architectural excellence</h3>
               
               <p className="mb-6">
-                I'm a Software Developer with a strong proficiency in frontend technologies, including HTML, CSS, JavaScript, ReactJS, Material UI, Bootstrap, and jQuery. Backed by solid skills in backend development with Node.js, Express.js, and a deep understanding of database management using MySQL.
+                I'm a Senior Full Stack Developer with over 3 years of specialized experience in React.js, Node.js, and MySQL. Expert in creating sophisticated, scalable web applications with exceptional UI/UX and robust backend architectures. I've led development teams to deliver enterprise-grade solutions that combine cutting-edge technologies with optimized performance.
               </p>
               
               <p className="mb-8">
-                Known for creating responsive and visually appealing web applications that enhance user engagement. Adept at collaborating with teams to deliver high-quality projects and passionate about staying current with industry trends and best practices.
+                Known for developing complex systems that scale seamlessly from prototype to production. I'm passionate about implementing modern development practices, mentoring junior developers, and creating innovative solutions that drive business growth. My technical leadership has consistently delivered projects that exceed client expectations while maintaining code quality and performance benchmarks.
               </p>
               
               <div className="flex flex-wrap gap-6 mb-8">
                 {[
-                  { title: "2+", subtitle: "Years Experience" },
-                  { title: "10+", subtitle: "Projects" },
-                  { title: "3", subtitle: "Companies" }
+                  { title: "3+", subtitle: "Years Experience" },
+                  { title: "20+", subtitle: "Projects Delivered" },
+                  { title: "3", subtitle: "Leadership Roles" }
                 ].map((item, index) => (
                   <motion.div 
                     key={index} 
@@ -82,19 +82,27 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               <div className="flex gap-4">
                 <motion.a 
                   href="#contact" 
-                  className="px-6 py-3 bg-primary text-black rounded-full font-medium shadow-lg"
+                  className="px-8 py-4 bg-gradient-to-r from-primary via-purple-500 to-secondary text-white rounded-full font-medium shadow-xl relative overflow-hidden group"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Contact Me
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-blue-500 to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="relative flex items-center justify-center">
+                    <span className="mr-2">Contact Me</span>
+                    <span className="animate-pulse">→</span>
+                  </span>
                 </motion.a>
                 <motion.a 
                   href="#" 
-                  className="px-6 py-3 border border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-black transition-all"
+                  className="px-8 py-4 border-2 border-primary text-primary rounded-full font-medium relative overflow-hidden group"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Download CV
+                  <span className="absolute inset-0 w-0 bg-primary group-hover:w-full transition-all duration-300"></span>
+                  <span className="relative flex items-center justify-center text-primary group-hover:text-black">
+                    <span className="mr-2">Download CV</span>
+                    <span>↓</span>
+                  </span>
                 </motion.a>
               </div>
             </motion.div>

@@ -41,7 +41,9 @@ const ThreeDAvatar = () => {
     rendererRef.current.setClearColor(0x000000, 0);
     rendererRef.current.shadowMap.enabled = true;
     rendererRef.current.shadowMap.type = THREE.PCFSoftShadowMap;
-    rendererRef.current.outputEncoding = THREE.sRGBEncoding;
+    // For Three.js v0.150+, outputEncoding is replaced with outputColorSpace
+    // rendererRef.current.outputEncoding = THREE.sRGBEncoding;
+    rendererRef.current.outputColorSpace = THREE.SRGBColorSpace; 
     rendererRef.current.toneMapping = THREE.ACESFilmicToneMapping;
     rendererRef.current.toneMappingExposure = 1.2;
     containerRef.current.appendChild(rendererRef.current.domElement);

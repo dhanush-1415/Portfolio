@@ -7,10 +7,43 @@ interface ExperienceSectionProps {
   ref?: (node: HTMLDivElement | null) => void;
 }
 
+interface WorkExperience {
+  type: 'work';
+  company: string;
+  title: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  responsibilities: string[];
+}
+
+interface Education {
+  type: 'education';
+  school: string;
+  degree: string;
+  field: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+}
+
+type ExperienceItem = WorkExperience | Education;
+
+// Type guards
+function isWorkExperience(item: ExperienceItem): item is WorkExperience {
+  return item.type === 'work';
+}
+
+function isEducation(item: ExperienceItem): item is Education {
+  return item.type === 'education';
+}
+
 const ExperienceSection = forwardRef<HTMLDivElement, ExperienceSectionProps>(
   (props, ref) => {
     const { experiences, education } = resumeData;
-    const allTimelineItems = [...experiences, ...education].sort((a, b) => {
+    // Type assertions ensure TypeScript recognizes our data structure
+    const allTimelineItems = [...experiences as WorkExperience[], ...education as Education[]].sort((a, b) => {
       // Sort by end date descending (newer first)
       const aEnd = a.endDate === 'Present' ? new Date() : new Date(a.endDate);
       const bEnd = b.endDate === 'Present' ? new Date() : new Date(b.endDate);
@@ -58,9 +91,13 @@ const ExperienceSection = forwardRef<HTMLDivElement, ExperienceSectionProps>(
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h3 className="text-xl font-serif font-bold mb-2">{item.company || item.school}</h3>
+                    <h3 className="text-xl font-serif font-bold mb-2">
+                      {isWorkExperience(item) ? item.company : isEducation(item) ? item.school : ''}
+                    </h3>
                     <p className="text-primary font-medium">{item.startDate} - {item.endDate}</p>
-                    <p className="mt-2 font-medium">{item.title || item.degree}</p>
+                    <p className="mt-2 font-medium">
+                      {isWorkExperience(item) ? item.title : isEducation(item) ? item.degree : ''}
+                    </p>
                     {item.location && <p className="mt-1">{item.location}</p>}
                   </motion.div>
                 </div>
@@ -71,7 +108,7 @@ const ExperienceSection = forwardRef<HTMLDivElement, ExperienceSectionProps>(
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {item.type === 'education' ? (
+                    {isEducation(item) ? (
                       <div>
                         <p className="mb-4">{item.description}</p>
                         <div className="flex items-center gap-2 text-primary">
@@ -81,7 +118,7 @@ const ExperienceSection = forwardRef<HTMLDivElement, ExperienceSectionProps>(
                       </div>
                     ) : (
                       <ul className="list-disc ml-4 space-y-2">
-                        {item.responsibilities.map((responsibility, idx) => (
+                        {isWorkExperience(item) && item.responsibilities.map((responsibility: string, idx: number) => (
                           <li key={idx}>{responsibility}</li>
                         ))}
                       </ul>

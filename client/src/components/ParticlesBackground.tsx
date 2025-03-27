@@ -221,13 +221,13 @@ const ParticlesBackground = () => {
       if (!canvasRef.current) return;
       
       const { clientWidth, clientHeight } = document.documentElement;
+      canvasRef.current.width = clientWidth;
+      canvasRef.current.height = clientHeight;
+      
       setDimensions({
         width: clientWidth,
         height: clientHeight
       });
-      
-      canvasRef.current.width = clientWidth;
-      canvasRef.current.height = clientHeight;
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -239,12 +239,6 @@ const ParticlesBackground = () => {
     
     // Initial setup
     updateDimensions();
-    
-    // After dimensions are updated, initialize particles
-    if (!isInitialized && dimensions.width > 0 && dimensions.height > 0) {
-      initParticles();
-      animate();
-    }
     
     // Add event listeners
     window.addEventListener('resize', updateDimensions);
@@ -258,7 +252,16 @@ const ParticlesBackground = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [dimensions, isInitialized]);
+  }, []);
+  
+  // Separate useEffect for initialization to avoid infinite rendering loops
+  useEffect(() => {
+    if (!isInitialized && dimensions.width > 0 && dimensions.height > 0) {
+      initParticles();
+      animate();
+      setIsInitialized(true); // This prevents the loop
+    }
+  }, [isInitialized, dimensions, initParticles, animate]);
   
   return (
     <motion.canvas
