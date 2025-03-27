@@ -1,9 +1,28 @@
-import { useTheme } from '@/context/ThemeContext';
 import { Moon, Sun } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const ThemeToggle = () => {
-  const { theme, toggleTheme } = useTheme();
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
+  // Get the theme from the DOM on component mount
+  useEffect(() => {
+    setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+  }, []);
+  
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    
+    // Update the DOM
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
 
   return (
     <motion.button

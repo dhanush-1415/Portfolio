@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useTheme } from '@/context/ThemeContext';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {

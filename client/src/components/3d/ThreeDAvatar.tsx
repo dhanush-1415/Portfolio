@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { useTheme } from '@/context/ThemeContext';
 import { User } from 'lucide-react';
 
 const ThreeDAvatar = () => {
@@ -9,7 +8,8 @@ const ThreeDAvatar = () => {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const { theme } = useTheme();
+  // Get theme from DOM instead of context to avoid context errors
+  const isDarkMode = document.documentElement.classList.contains('dark');
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -41,7 +41,7 @@ const ThreeDAvatar = () => {
       // For a minimal placeholder, create a sphere head with particle hair
       const headGeometry = new THREE.SphereGeometry(2, 32, 32);
       const headMaterial = new THREE.MeshStandardMaterial({ 
-        color: theme === 'dark' ? 0x444444 : 0xdddddd,
+        color: isDarkMode ? 0x444444 : 0xdddddd,
         roughness: 0.7,
         metalness: 0.3,
       });
@@ -66,7 +66,7 @@ const ThreeDAvatar = () => {
       particles.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
       
       const particleMaterial = new THREE.PointsMaterial({
-        color: theme === 'dark' ? 0xDFBD69 : 0xDFBD69,
+        color: 0xDFBD69, // Gold color for both themes
         size: 0.05,
         transparent: true,
         blending: THREE.AdditiveBlending,
@@ -145,7 +145,7 @@ const ThreeDAvatar = () => {
       
       window.removeEventListener('resize', handleResize);
     };
-  }, [theme]);
+  }, []);
   
   return (
     <div className="w-full h-full relative">

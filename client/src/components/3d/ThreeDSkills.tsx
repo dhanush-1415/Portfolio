@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { useTheme } from '@/context/ThemeContext';
 
 interface ThreeDSkillsProps {
   skills: string[];
@@ -15,7 +14,8 @@ const ThreeDSkills = ({ skills = [] }: ThreeDSkillsProps) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const skillsGroupRef = useRef<THREE.Group | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const { theme } = useTheme();
+  // Get theme from DOM instead of context to avoid context errors
+  const isDarkMode = document.documentElement.classList.contains('dark');
 
   useEffect(() => {
     if (!containerRef.current || skills.length === 0) return;
@@ -55,7 +55,7 @@ const ThreeDSkills = ({ skills = [] }: ThreeDSkillsProps) => {
       // Create central sphere to represent skill hub
       const hubGeometry = new THREE.SphereGeometry(3, 32, 32);
       const hubMaterial = new THREE.MeshStandardMaterial({
-        color: theme === 'dark' ? 0xDFBD69 : 0xDFBD69,
+        color: 0xDFBD69, // Gold color for both themes
         metalness: 0.7,
         roughness: 0.3,
       });
@@ -65,7 +65,7 @@ const ThreeDSkills = ({ skills = [] }: ThreeDSkillsProps) => {
       const glowGeometry = new THREE.SphereGeometry(3.2, 32, 32);
       const glowMaterial = new THREE.ShaderMaterial({
         uniforms: {
-          color: { value: new THREE.Color(theme === 'dark' ? 0xDFBD69 : 0xDFBD69) },
+          color: { value: new THREE.Color(0xDFBD69) }, // Gold color for both themes
         },
         vertexShader: `
           varying vec3 vNormal;
@@ -274,7 +274,7 @@ const ThreeDSkills = ({ skills = [] }: ThreeDSkillsProps) => {
         containerRef.current.removeEventListener('touchmove', handlePointerMove);
       }
     };
-  }, [skills, theme]);
+  }, [skills]);
   
   return <div ref={containerRef} className="w-full h-full"></div>;
 };

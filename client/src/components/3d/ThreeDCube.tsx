@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { useTheme } from '@/context/ThemeContext';
 
 const ThreeDCube = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -9,7 +8,8 @@ const ThreeDCube = () => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const cubeRef = useRef<THREE.Group | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const { theme } = useTheme();
+  // Get theme from DOM instead of context to avoid context errors
+  const isDarkMode = document.documentElement.classList.contains('dark');
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -41,9 +41,9 @@ const ThreeDCube = () => {
       const group = new THREE.Group();
       
       // Define colors based on theme
-      const primaryColor = theme === 'dark' ? 0xDFBD69 : 0xDFBD69; // Gold
-      const secondaryColor = theme === 'dark' ? 0x4A225D : 0x4A225D; // Purple
-      const accentColor = theme === 'dark' ? 0x4CC9F0 : 0x4CC9F0; // Accent blue
+      const primaryColor = 0xDFBD69; // Gold
+      const secondaryColor = 0x4A225D; // Purple
+      const accentColor = 0x4CC9F0; // Accent blue
       
       // Create multiple wireframe cubes with different sizes and rotations
       const createWireCube = (size: number, color: number, rotation: THREE.Vector3) => {
@@ -196,7 +196,7 @@ const ThreeDCube = () => {
       
       window.removeEventListener('resize', handleResize);
     };
-  }, [theme]);
+  }, []);
   
   return <div ref={containerRef} className="w-full h-full"></div>;
 };

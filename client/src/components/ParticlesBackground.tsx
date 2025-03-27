@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useTheme } from '@/context/ThemeContext';
 import * as THREE from 'three';
 
 const ParticlesBackground = () => {
@@ -10,7 +9,8 @@ const ParticlesBackground = () => {
   const particlesRef = useRef<THREE.Points | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   
-  const { theme } = useTheme();
+  // Get theme from DOM instead of context to avoid context errors
+  const isDarkMode = document.documentElement.classList.contains('dark');
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -71,13 +71,8 @@ const ParticlesBackground = () => {
     };
   }, []);
   
-  // Update particle colors when theme changes
-  useEffect(() => {
-    if (particlesRef.current) {
-      sceneRef.current?.remove(particlesRef.current);
-      createParticles();
-    }
-  }, [theme]);
+  // We removed the theme-dependent effect
+  // The particles will just be created once and use the theme detected at load time
   
   const createParticles = () => {
     if (!sceneRef.current) return;
@@ -104,8 +99,8 @@ const ParticlesBackground = () => {
     particleGeometry.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1));
     
     // Create particle material based on theme
-    const primaryColor = theme === 'dark' ? new THREE.Color('#DFBD69') : new THREE.Color('#DFBD69');
-    const secondaryColor = theme === 'dark' ? new THREE.Color('#4A225D') : new THREE.Color('#4A225D');
+    const primaryColor = new THREE.Color('#DFBD69'); // Gold color for both themes
+    const secondaryColor = new THREE.Color('#4A225D'); // Purple color for both themes
     
     const particleMaterial = new THREE.ShaderMaterial({
       uniforms: {
