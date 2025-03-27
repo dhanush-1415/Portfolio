@@ -1,152 +1,272 @@
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+
+interface Particle {
+  x: number;
+  y: number;
+  size: number;
+  speedX: number;
+  speedY: number;
+  color: string;
+  opacity: number;
+  blinking: boolean;
+}
 
 const ParticlesBackground = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const particlesRef = useRef<THREE.Points | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
-  
-  // Get theme from DOM instead of context to avoid context errors
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [isInitialized, setIsInitialized] = useState(false);
+  const particles = useRef<Particle[]>([]);
+  const mousePosition = useRef({ x: 0, y: 0 });
+  const animationRef = useRef<number | null>(null);
   const isDarkMode = document.documentElement.classList.contains('dark');
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-    
-    // Initialize scene
-    sceneRef.current = new THREE.Scene();
-    
-    // Initialize camera
-    const { offsetWidth: width, offsetHeight: height } = containerRef.current;
-    cameraRef.current = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    cameraRef.current.position.z = 30;
-    
-    // Initialize renderer
-    rendererRef.current = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    rendererRef.current.setSize(width, height);
-    rendererRef.current.setPixelRatio(window.devicePixelRatio);
-    containerRef.current.appendChild(rendererRef.current.domElement);
-    
+  const initParticles = () => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Clear any existing particles
+    particles.current = [];
+
     // Create particles
-    createParticles();
+    const particleCount = Math.floor((window.innerWidth * window.innerHeight) / 8000); // Increased density
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-primary').trim();
+    const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-secondary').trim();
+    const tertiaryColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-tertiary').trim();
     
-    // Animation loop
-    const animate = () => {
-      if (!particlesRef.current || !sceneRef.current || !cameraRef.current || !rendererRef.current) return;
+    for (let i = 0; i < particleCount; i++) {
+      // Vary particle sizes with a bias toward smaller particles
+      const size = Math.random() < 0.8 
+        ? Math.random() * 1.5 + 0.3 // 80% smaller particles
+        : Math.random() * 2.5 + 1;  // 20% larger particles
       
-      particlesRef.current.rotation.x += 0.0005;
-      particlesRef.current.rotation.y += 0.0008;
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
       
-      rendererRef.current.render(sceneRef.current, cameraRef.current);
-      animationFrameRef.current = requestAnimationFrame(animate);
+      // Varied speeds with some particles moving faster
+      const speedFactor = Math.random() < 0.1 ? 0.5 : 0.2; // 10% faster particles
+      const speedX = (Math.random() - 0.5) * speedFactor;
+      const speedY = (Math.random() - 0.5) * speedFactor;
+      
+      // Use a mix of colors for a royal theme
+      let color;
+      const colorRand = Math.random();
+      if (colorRand < 0.5) { // Primary color (purple)
+        color = `hsl(${primaryColor})`;
+      } else if (colorRand < 0.8) { // Secondary color (blue)
+        color = `hsl(${secondaryColor})`;
+      } else if (colorRand < 0.95) { // Tertiary color (deep purple)
+        color = `hsl(${tertiaryColor})`;
+      } else { // A few white particles for contrast
+        color = 'hsl(0, 0%, 100%)';
+      }
+      
+      // Vary opacity for depth perception
+      const opacity = Math.random() * 0.6 + 0.2;
+      
+      // Some particles will blink for visual interest
+      const blinking = Math.random() > 0.6;
+      
+      particles.current.push({
+        x,
+        y,
+        size,
+        speedX,
+        speedY,
+        color,
+        opacity,
+        blinking
+      });
+    }
+
+    setIsInitialized(true);
+  };
+
+  const animate = () => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Update and draw particles
+    particles.current.forEach((p, index) => {
+      // Move particle
+      p.x += p.speedX;
+      p.y += p.speedY;
+
+      // Wrap around boundaries
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      // Particle blinking effect
+      if (p.blinking) {
+        p.opacity = 0.2 + Math.abs(Math.sin(Date.now() * 0.001 + index)) * 0.3;
+      }
+
+      // Enhanced mouse interaction with more sophisticated effects
+      const dx = mousePosition.current.x - p.x;
+      const dy = mousePosition.current.y - p.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const mouseRadius = 200; // Increased interaction radius
+      
+      // Initialize size multiplier variable for mouse hover effect
+      let sizeMultiplier = 1;
+      
+      if (distance < mouseRadius) {
+        // Calculate interpolation factor based on distance
+        const interpolationFactor = 1 - (distance / mouseRadius);
+        
+        // Different behavior based on particle size
+        if (p.size < 1) {
+          // Smaller particles are attracted to the cursor
+          const angle = Math.atan2(dy, dx);
+          const attractionStrength = 0.15 * interpolationFactor;
+          p.speedX += Math.cos(angle) * attractionStrength;
+          p.speedY += Math.sin(angle) * attractionStrength;
+          
+          // Increase opacity when near cursor
+          p.opacity = Math.min(1, p.opacity + interpolationFactor * 0.3);
+        } else {
+          // Larger particles are repelled from the cursor
+          const angle = Math.atan2(dy, dx);
+          const repulsionStrength = 0.08 * interpolationFactor;
+          p.speedX -= Math.cos(angle) * repulsionStrength;
+          p.speedY -= Math.sin(angle) * repulsionStrength;
+        }
+        
+        // Add glow effect to particles near mouse
+        const glowIntensity = interpolationFactor * 0.7;
+        ctx.shadowBlur = 15 * glowIntensity;
+        ctx.shadowColor = p.color;
+        
+        // Increase the size multiplier for particles near the mouse
+        sizeMultiplier = 1 + (interpolationFactor * 0.2);
+      } else {
+        // Apply friction to gradually slow particles
+        p.speedX *= 0.99;
+        p.speedY *= 0.99;
+        ctx.shadowBlur = 0;
+      }
+
+      // Maximum speed limit
+      const speed = Math.sqrt(p.speedX * p.speedX + p.speedY * p.speedY);
+      if (speed > 1) {
+        p.speedX = (p.speedX / speed) * 1;
+        p.speedY = (p.speedY / speed) * 1;
+      }
+
+      // Draw particle with size multiplier effect
+      ctx.globalAlpha = p.opacity;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * sizeMultiplier, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    });
+
+    // Connect nearby particles with lines - more sophisticated connection system
+    const connectColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-connect').trim();
+    const connectionDistance = Math.min(window.innerWidth, window.innerHeight) * 0.08; // Responsive connection distance
+    
+    // We'll only connect some particles to improve performance
+    const particlesToConnect = particles.current.filter(() => Math.random() > 0.5);
+    
+    for (let i = 0; i < particlesToConnect.length; i++) {
+      for (let j = i + 1; j < particlesToConnect.length; j++) {
+        const p1 = particlesToConnect[i];
+        const p2 = particlesToConnect[j];
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < connectionDistance) {
+          // Calculate opacity based on distance
+          const opacity = 1 - (distance / connectionDistance);
+          ctx.globalAlpha = opacity * 0.3; // Max opacity of 0.3
+          
+          // Create a gradient for the line to make it fade out
+          const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+          
+          // Convert HSL colors to rgba for proper gradient
+          const color1 = `rgba(156, 91, 255, ${opacity * 0.5})`;
+          const color2 = `rgba(156, 91, 255, ${opacity * 0.5})`;
+          
+          gradient.addColorStop(0, color1);
+          gradient.addColorStop(1, color2);
+          
+          // Draw the connection line
+          ctx.beginPath();
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = Math.max(0.1, (p1.size + p2.size) * 0.05); // Line width based on particle sizes
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    animationRef.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (!canvasRef.current) return;
+      
+      const { clientWidth, clientHeight } = document.documentElement;
+      setDimensions({
+        width: clientWidth,
+        height: clientHeight
+      });
+      
+      canvasRef.current.width = clientWidth;
+      canvasRef.current.height = clientHeight;
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePosition.current = {
+        x: e.clientX,
+        y: e.clientY
+      };
     };
     
-    animate();
+    // Initial setup
+    updateDimensions();
     
-    // Handle window resize
-    const handleResize = () => {
-      if (!containerRef.current || !cameraRef.current || !rendererRef.current) return;
-      
-      const { offsetWidth: width, offsetHeight: height } = containerRef.current;
-      cameraRef.current.aspect = width / height;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(width, height);
-    };
+    // After dimensions are updated, initialize particles
+    if (!isInitialized && dimensions.width > 0 && dimensions.height > 0) {
+      initParticles();
+      animate();
+    }
     
-    window.addEventListener('resize', handleResize);
+    // Add event listeners
+    window.addEventListener('resize', updateDimensions);
+    window.addEventListener('mousemove', handleMouseMove);
     
     // Clean up
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
-      
-      if (rendererRef.current && containerRef.current) {
-        containerRef.current.removeChild(rendererRef.current.domElement);
-      }
-      
-      window.removeEventListener('resize', handleResize);
     };
-  }, []);
-  
-  // We removed the theme-dependent effect
-  // The particles will just be created once and use the theme detected at load time
-  
-  const createParticles = () => {
-    if (!sceneRef.current) return;
-    
-    const particleCount = 1000;
-    const particleGeometry = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleSizes = new Float32Array(particleCount);
-    
-    for (let i = 0; i < particleCount * 3; i += 3) {
-      // Random positions in a spherical volume
-      const radius = 50 * Math.random();
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.random() * Math.PI;
-      
-      particlePositions[i] = radius * Math.sin(phi) * Math.cos(theta);
-      particlePositions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      particlePositions[i + 2] = radius * Math.cos(phi);
-      
-      particleSizes[i / 3] = Math.random() * 2 + 1;
-    }
-    
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    particleGeometry.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1));
-    
-    // Create particle material based on theme
-    const primaryColor = new THREE.Color('#DFBD69'); // Gold color for both themes
-    const secondaryColor = new THREE.Color('#4A225D'); // Purple color for both themes
-    
-    const particleMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        color1: { value: primaryColor },
-        color2: { value: secondaryColor },
-      },
-      vertexShader: `
-        attribute float size;
-        varying vec3 vPos;
-        
-        void main() {
-          vPos = position;
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = size * (300.0 / -mvPosition.z);
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 color1;
-        uniform vec3 color2;
-        varying vec3 vPos;
-        
-        void main() {
-          float distance = length(gl_PointCoord - vec2(0.5, 0.5));
-          if (distance > 0.5) discard;
-          
-          // Mix colors based on position
-          float mixRatio = (vPos.y + 50.0) / 100.0;
-          vec3 color = mix(color1, color2, mixRatio);
-          
-          gl_FragColor = vec4(color, 1.0 - distance * 2.0);
-        }
-      `,
-      transparent: true,
-      depthTest: false,
-    });
-    
-    particlesRef.current = new THREE.Points(particleGeometry, particleMaterial);
-    sceneRef.current.add(particlesRef.current);
-  };
+  }, [dimensions, isInitialized]);
   
   return (
-    <div 
-      ref={containerRef} 
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1]"
-      aria-hidden="true"
+    <motion.canvas
+      ref={canvasRef}
+      className="particles-canvas"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
     />
   );
 };

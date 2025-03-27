@@ -48,6 +48,12 @@
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 28% 30%;
     --sidebar-ring: 267 72% 58%;
+    
+    /* Particle colors */
+    --particle-primary: 267 72% 58%;
+    --particle-secondary: 250 95% 75%;
+    --particle-tertiary: 290 76% 37%;
+    --particle-connect: 267 72% 58% / 0.05;
   }
 
   .dark {
@@ -93,6 +99,12 @@
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 16% 22%;
     --sidebar-ring: 267 72% 58%;
+    
+    /* Particle colors for dark mode */
+    --particle-primary: 267 72% 58%;
+    --particle-secondary: 250 95% 75%;
+    --particle-tertiary: 290 76% 37%;
+    --particle-connect: 267 72% 58% / 0.1;
   }
 
   * {
@@ -165,6 +177,26 @@
     0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
     50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
     100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+  }
+  
+  @keyframes particle-pulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.7; }
+  }
+  
+  @keyframes particle-drift {
+    0% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(10px) translateY(-10px); }
+    50% { transform: translateX(0) translateY(-20px); }
+    75% { transform: translateX(-10px) translateY(-10px); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+  
+  @keyframes line-fade {
+    0% { opacity: 0.1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.1; }
   }
 
   /* Utility classes */
@@ -322,5 +354,32 @@
     @apply rounded-lg border border-primary/50;
     box-shadow: 0 0 5px rgba(var(--primary), 0.5),
                 inset 0 0 5px rgba(var(--primary), 0.5);
+  }
+  
+  /* Particle animation utility classes */
+  .animate-particle-pulse {
+    animation: particle-pulse 4s ease-in-out infinite;
+  }
+  
+  .animate-particle-drift {
+    animation: particle-drift 15s ease-in-out infinite;
+  }
+  
+  .animate-line-fade {
+    animation: line-fade 3s ease-in-out infinite;
+  }
+  
+  /* Effects for the particle canvas */
+  .particles-canvas {
+    @apply fixed top-0 left-0 w-full h-full z-[-10] pointer-events-none;
+    backdrop-filter: contrast(1.02);
+  }
+  
+  /* Interactive content above particles */
+  .content-above-particles {
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(3px);
+    background: rgba(var(--background), 0.01);
   }
 }
