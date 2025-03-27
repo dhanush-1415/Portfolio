@@ -4,95 +4,95 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 240 6% 98%;
+    --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 240 10% 3.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 240 10% 3.9%;
 
-    --primary: 45 57% 64%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 267 72% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 271 48% 25%;
+    --secondary: 240 38% 20%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 267 58% 92%;
+    --accent-foreground: 240 10% 3.9%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 45 57% 64%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 267 72% 58%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --chart-1: 45 57% 64%;
-    --chart-2: 271 48% 25%;
-    --chart-3: 195 83% 62%;
-    --chart-4: 48 96% 53%;
-    --chart-5: 291 64% 42%;
+    --chart-1: 267 72% 58%;
+    --chart-2: 240 38% 20%;
+    --chart-3: 250 95% 75%;
+    --chart-4: 340 85% 65%;
+    --chart-5: 190 80% 50%;
 
-    --sidebar-background: 271 48% 25%;
+    --sidebar-background: 240 38% 20%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 45 57% 64%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 195 83% 62%;
+    --sidebar-primary: 267 72% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 250 95% 75%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 271 28% 35%;
-    --sidebar-ring: 45 57% 64%;
+    --sidebar-border: 240 28% 30%;
+    --sidebar-ring: 267 72% 58%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 222.2 84% 9.8%;
-    --card-foreground: 210 40% 98%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 45 57% 64%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 267 72% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 271 48% 25%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 24% 16%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 240 3.7% 15.5%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 267 58% 18%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 45 57% 64%;
+    --border: 240 3.7% 15.5%;
+    --input: 240 3.7% 15.5%;
+    --ring: 267 72% 58%;
 
-    --chart-1: 45 57% 64%;
-    --chart-2: 271 48% 25%;
-    --chart-3: 195 83% 62%;
-    --chart-4: 48 96% 53%;
-    --chart-5: 291 64% 42%;
+    --chart-1: 267 72% 58%;
+    --chart-2: 240 24% 16%;
+    --chart-3: 250 95% 75%;
+    --chart-4: 340 85% 65%;
+    --chart-5: 190 80% 50%;
 
-    --sidebar-background: 271 48% 25%;
+    --sidebar-background: 240 24% 16%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 45 57% 64%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 195 83% 62%;
+    --sidebar-primary: 267 72% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 250 95% 75%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 271 28% 35%;
-    --sidebar-ring: 45 57% 64%;
+    --sidebar-border: 240 16% 22%;
+    --sidebar-ring: 267 72% 58%;
   }
 
   * {
@@ -137,6 +137,35 @@
       transform: rotate(360deg);
     }
   }
+  
+  @keyframes glow {
+    0% { filter: drop-shadow(0 0 5px rgba(var(--primary), 0.3)); }
+    50% { filter: drop-shadow(0 0 20px rgba(var(--primary), 0.6)); }
+    100% { filter: drop-shadow(0 0 5px rgba(var(--primary), 0.3)); }
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  @keyframes morph {
+    0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+    50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
+    100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+  }
 
   /* Utility classes */
   .animate-float {
@@ -155,17 +184,58 @@
     animation: spin-slow 15s linear infinite;
   }
   
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite;
+  }
+  
+  .animate-bounce {
+    animation: bounce 2s ease-in-out infinite;
+  }
+  
+  .animate-pulse {
+    animation: pulse 3s ease-in-out infinite;
+  }
+  
+  .animate-morph {
+    animation: morph 8s ease-in-out infinite;
+  }
+  
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg;
   }
   
   .dark .glass {
-    @apply bg-black/30 border-white/5;
+    @apply bg-black/30 backdrop-blur-lg border-white/5 shadow-lg;
+  }
+  
+  .royal-bg {
+    background: linear-gradient(135deg, hsl(267, 72%, 58%), hsl(290, 76%, 37%), hsl(250, 85%, 33%));
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
+  }
+  
+  .royal-border {
+    @apply border-2 border-primary/50 rounded-lg shadow-md;
+    box-shadow: 0 0 15px rgba(var(--primary), 0.5);
+  }
+  
+  .royal-card {
+    @apply bg-card shadow-xl rounded-xl border border-primary/20 overflow-hidden transition-all duration-300;
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+  
+  .royal-card:hover {
+    @apply border-primary/40 shadow-2xl;
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 15px rgba(var(--primary), 0.5);
   }
 
   .skill-progress {
     position: relative;
     overflow: hidden;
+    @apply rounded-full shadow-inner bg-muted;
   }
   
   .skill-progress::after {
@@ -175,7 +245,11 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, rgba(223, 189, 105, 0) 0%, rgba(223, 189, 105, 0.5) 50%, rgba(223, 189, 105, 0) 100%);
+    background: linear-gradient(90deg, 
+      rgba(var(--primary), 0) 0%, 
+      rgba(var(--primary), 0.5) 50%, 
+      rgba(var(--primary), 0) 100%
+    );
     animation: shimmer 2s infinite;
     transform: translateX(-100%);
   }
@@ -209,6 +283,19 @@
                  0 10px 10px rgba(0,0,0,.4),
                  0 20px 20px rgba(0,0,0,.35);
   }
+  
+  .royal-text {
+    @apply font-extrabold text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, hsl(267, 72%, 58%), hsl(290, 76%, 37%), hsl(250, 85%, 33%));
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 5px rgba(var(--primary), 0.5),
+                 0 0 10px rgba(var(--primary), 0.3),
+                 0 0 15px rgba(var(--primary), 0.1);
+  }
 
   .tilt-card {
     transition: transform 0.5s ease;
@@ -224,5 +311,16 @@
   .section-transition.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+  
+  .blob {
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    animation: morph 8s ease-in-out infinite;
+  }
+  
+  .neon-border {
+    @apply rounded-lg border border-primary/50;
+    box-shadow: 0 0 5px rgba(var(--primary), 0.5),
+                inset 0 0 5px rgba(var(--primary), 0.5);
   }
 }
