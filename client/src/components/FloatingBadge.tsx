@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
-import { Icon, LucideProps } from 'lucide-react';
+import { LucideProps } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
+
+// Define a type for Lucide icon components
+type LucideIcon = React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+    ref?: React.Ref<SVGSVGElement>;
+} & LucideProps>;
 
 interface FloatingBadgeProps {
   icon: string;
@@ -12,9 +17,10 @@ interface FloatingBadgeProps {
 
 const FloatingBadge = ({ icon, text, position, color = 'bg-card', delay = 0 }: FloatingBadgeProps) => {
   // Dynamically get the Lucide icon
-  const LucideIcon = (LucideIcons as Record<string, Icon>)[
-    icon.charAt(0).toUpperCase() + icon.slice(1)
-  ] || LucideIcons.Code;
+  const iconName = icon.charAt(0).toUpperCase() + icon.slice(1);
+  const LucideIcon = iconName in LucideIcons 
+    ? (LucideIcons as any)[iconName] 
+    : LucideIcons.Code;
 
   return (
     <motion.div 

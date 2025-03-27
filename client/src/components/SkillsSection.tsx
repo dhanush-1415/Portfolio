@@ -1,7 +1,12 @@
 import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { Icon } from 'lucide-react';
+import { LucideProps } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
+
+// Define a type for Lucide icon components
+type LucideIcon = React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+    ref?: React.Ref<SVGSVGElement>;
+} & LucideProps>;
 import ThreeDSkills from './3d/ThreeDSkills';
 import { resumeData } from '@/data/resumeData';
 
@@ -43,9 +48,10 @@ interface SkillCardProps {
 
 const SkillCard = ({ icon, name, index }: SkillCardProps) => {
   // Dynamically get the Lucide icon
-  const LucideIcon = (LucideIcons as Record<string, Icon>)[
-    icon.charAt(0).toUpperCase() + icon.slice(1)
-  ] || LucideIcons.Code;
+  const iconName = icon.charAt(0).toUpperCase() + icon.slice(1);
+  const LucideIcon = iconName in LucideIcons 
+    ? (LucideIcons as any)[iconName] 
+    : LucideIcons.Code;
 
   return (
     <motion.div 
