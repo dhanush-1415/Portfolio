@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Mail, Phone, MapPin, Linkedin, Github, Twitter, Instagram, Send, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, Twitter, Instagram, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 
@@ -28,7 +28,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
   (props, ref) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { toast } = useToast();
-
+    
     const form = useForm<ContactFormValues>({
       resolver: zodResolver(contactFormSchema),
       defaultValues: {
@@ -41,17 +41,17 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
 
     const onSubmit = async (data: ContactFormValues) => {
       setIsSubmitting(true);
-
+      
       try {
         // In a real implementation, this would send the form data to a server
         // await apiRequest('POST', '/api/contact', data);
-
+        
         toast({
           title: "Message Sent!",
           description: "Thank you for your message. I'll get back to you soon.",
           variant: "default",
         });
-
+        
         form.reset();
       } catch (error) {
         toast({
@@ -65,8 +65,8 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
     };
 
     return (
-      <section
-        id="contact"
+      <section 
+        id="contact" 
         ref={ref}
         className="min-h-screen pt-28 pb-20 px-6 md:px-20 relative section-transition"
       >
@@ -75,7 +75,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
             <p className="text-primary font-sans tracking-wider">GET IN TOUCH</p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold">Contact <span className="text-primary">Me</span></h2>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Information */}
             <motion.div
@@ -87,7 +87,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
               <div className="glass p-8 rounded-xl shadow-xl border border-primary/30 h-full">
                 <h3 className="text-2xl font-serif font-bold mb-6">Let's Connect</h3>
                 <p className="mb-8">Feel free to reach out to me for any inquiries, collaboration opportunities, or just to say hello!</p>
-
+                
                 <div className="space-y-6">
                   {/* Email */}
                   <div className="flex items-start gap-4">
@@ -99,7 +99,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                       <a href="mailto:workofdhanu@gmail.com" className="text-primary hover:underline">workofdhanu@gmail.com</a>
                     </div>
                   </div>
-
+                  
                   {/* Phone */}
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
@@ -110,7 +110,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                       <a href="tel:+919398263767" className="text-primary hover:underline">+91 9398263767</a>
                     </div>
                   </div>
-
+                  
                   {/* Location */}
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
@@ -122,9 +122,9 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                       <p>Andhra Pradesh, 517590</p>
                     </div>
                   </div>
-
+                  
                   {/* Social Media */}
-                  {/* <div className="pt-6">
+                  <div className="pt-6">
                     <h4 className="font-medium mb-4">Connect with me</h4>
                     <div className="flex gap-4">
                       {[
@@ -144,51 +144,11 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         </motion.a>
                       ))}
                     </div>
-                  </div> */}
-                  <div className="flex gap-4">
-                    {[
-                      {
-                        icon: <Linkedin className="h-4 w-4" />,
-                        url: "https://www.linkedin.com/in/dhanush-j-ba92b8165",
-                        label: "LinkedIn",
-                        handle: "yourprofile"
-                      },
-                      {
-                        icon: <Github className="h-4 w-4" />,
-                        url: "https://github.com/dhanush-1415",
-                        label: "GitHub",
-                        handle: "yourusername"
-                      },
-                      {
-                        icon: <Mail className="h-4 w-4" />,
-                        url: "mailto:workofdhanu@gmail.com",
-                        label: "Email",
-                        handle: "your.email@example.com"
-                      },
-                      {
-                        icon: <MessageCircle className="h-4 w-4" />,
-                        url: "https://wa.me/9398263767",
-                        label: "WhatsApp",
-                        handle: "+yourphonenumber"
-                      }
-                    ].map((social, index) => (
-                      <motion.a
-                        key={index}
-                        href={social.url}
-                        className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-black hover:bg-secondary hover:text-white transition-colors"
-                        aria-label={social.label}
-                        whileHover={{ y: -3 }}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {social.icon}
-                      </motion.a>
-                    ))}
                   </div>
                 </div>
               </div>
             </motion.div>
-
+            
             {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -198,7 +158,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
             >
               <div className="glass p-8 rounded-xl shadow-xl border border-primary/30 h-full">
                 <h3 className="text-2xl font-serif font-bold mb-6">Send me a message</h3>
-
+                
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
@@ -208,9 +168,9 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         <FormItem>
                           <FormLabel>Your Name</FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="John Doe"
-                              {...field}
+                            <Input 
+                              placeholder="John Doe" 
+                              {...field} 
                               className="bg-background dark:bg-background border-primary/30 focus:border-primary"
                             />
                           </FormControl>
@@ -218,7 +178,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         </FormItem>
                       )}
                     />
-
+                    
                     <FormField
                       control={form.control}
                       name="email"
@@ -226,10 +186,10 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         <FormItem>
                           <FormLabel>Your Email</FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="john@example.com"
-                              type="email"
-                              {...field}
+                            <Input 
+                              placeholder="john@example.com" 
+                              type="email" 
+                              {...field} 
                               className="bg-background dark:bg-background border-primary/30 focus:border-primary"
                             />
                           </FormControl>
@@ -237,7 +197,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         </FormItem>
                       )}
                     />
-
+                    
                     <FormField
                       control={form.control}
                       name="subject"
@@ -245,9 +205,9 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         <FormItem>
                           <FormLabel>Subject</FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="How can I help you?"
-                              {...field}
+                            <Input 
+                              placeholder="How can I help you?" 
+                              {...field} 
                               className="bg-background dark:bg-background border-primary/30 focus:border-primary"
                             />
                           </FormControl>
@@ -255,7 +215,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         </FormItem>
                       )}
                     />
-
+                    
                     <FormField
                       control={form.control}
                       name="message"
@@ -263,10 +223,10 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         <FormItem>
                           <FormLabel>Message</FormLabel>
                           <FormControl>
-                            <Textarea
-                              placeholder="Your message here..."
+                            <Textarea 
+                              placeholder="Your message here..." 
                               rows={5}
-                              {...field}
+                              {...field} 
                               className="bg-background dark:bg-background border-primary/30 focus:border-primary resize-none"
                             />
                           </FormControl>
@@ -274,9 +234,9 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                         </FormItem>
                       )}
                     />
-
-                    <Button
-                      type="submit"
+                    
+                    <Button 
+                      type="submit" 
                       className="w-full py-6 bg-gradient-to-r from-primary to-secondary text-black hover:text-white font-medium"
                       disabled={isSubmitting}
                     >

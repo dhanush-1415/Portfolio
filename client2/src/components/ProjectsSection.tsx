@@ -7,7 +7,7 @@ interface ProjectSectionProps {
   ref?: (node: HTMLDivElement | null) => void;
 }
 
-type ProjectCategory = 'All' | 'Web' | 'Mobile';
+type ProjectCategory = 'All' | 'Web' | 'Mobile' | 'Full Stack';
 
 const ProjectsSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
   (props, ref) => {
@@ -96,7 +96,7 @@ const ProjectsSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
                       {/* View project overlay */}
                       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-secondary/90 flex items-end justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                         <div className="p-4 text-center text-white">
-                          {/* <p className="font-medium">View Project</p> */}
+                          <p className="font-medium">View Project</p>
                         </div>
                       </div>
                     </div>
