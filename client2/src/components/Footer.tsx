@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Instagram, MessageCircle, Mail } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
@@ -24,30 +24,10 @@ const Footer = () => {
             </p>
             <div className="flex gap-4 justify-center md:justify-end mt-4">
               {[
-                {
-                  icon: <Linkedin className="h-4 w-4" />,
-                  url: "https://www.linkedin.com/in/dhanush-j-ba92b8165",
-                  label: "LinkedIn",
-                  handle: "yourprofile"
-                },
-                {
-                  icon: <Github className="h-4 w-4" />,
-                  url: "https://github.com/dhanush-1415",
-                  label: "GitHub",
-                  handle: "yourusername"
-                },
-                {
-                  icon: <Mail className="h-4 w-4" />,
-                  url: "mailto:workofdhanu@gmail.com",
-                  label: "Email",
-                  handle: "your.email@example.com"
-                },
-                {
-                  icon: <MessageCircle className="h-4 w-4" />,
-                  url: "https://wa.me/9398263767",
-                  label: "WhatsApp",
-                  handle: "+yourphonenumber"
-                }
+                { icon: <Linkedin className="h-4 w-4" />, url: "#", label: "LinkedIn" },
+                { icon: <Github className="h-4 w-4" />, url: "#", label: "GitHub" },
+                { icon: <Twitter className="h-4 w-4" />, url: "#", label: "Twitter" },
+                { icon: <Instagram className="h-4 w-4" />, url: "#", label: "Instagram" }
               ].map((social, index) => (
                 <motion.a 
                   key={index}

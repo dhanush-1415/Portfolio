@@ -55,7 +55,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               <h3 className="text-2xl font-serif font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Senior Full Stack Developer with a passion for architectural excellence</h3>
               
               <p className="mb-6">
-                I'm a Senior Full Stack Developer with over 3+ years of specialized experience in React.js, Node.js, and MySQL. Expert in creating sophisticated, scalable web applications with exceptional UI/UX and robust backend architectures. I've led development teams to deliver enterprise-grade solutions that combine cutting-edge technologies with optimized performance.
+                I'm a Senior Full Stack Developer with over 3 years of specialized experience in React.js, Node.js, and MySQL. Expert in creating sophisticated, scalable web applications with exceptional UI/UX and robust backend architectures. I've led development teams to deliver enterprise-grade solutions that combine cutting-edge technologies with optimized performance.
               </p>
               
               <p className="mb-8">
@@ -64,8 +64,8 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               
               <div className="flex flex-wrap gap-6 mb-8">
                 {[
-                  { title: "3+", subtitle: "Years Experience in Product Startups" },
-                  { title: "100%", subtitle: "Uptime Across Releases" },
+                  { title: "3+", subtitle: "Years Experience" },
+                  { title: "20+", subtitle: "Projects Delivered" },
                   { title: "3", subtitle: "Leadership Roles" }
                 ].map((item, index) => (
                   <motion.div 
